@@ -1,0 +1,26 @@
+{
+  "name": "bytoid",
+  "version": "1.0.0",
+  "description": "Bytoid Bot",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/byteslash-hub/bytoid.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/byteslash-hub/bytoid/issues"
+  },
+  "homepage": "https://github.com/byteslash-hub/bytoid#readme",
+  "dependencies": {
+    "discord.js": "^13.1.0",
+    "dotenv": "^10.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
