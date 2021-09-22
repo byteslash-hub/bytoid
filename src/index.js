@@ -1,7 +1,8 @@
 const { Client, Intents } = require("discord.js");
-const client = new Client({
-  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
-});
+
+const intents = new Intents(32767); // passed all the intents to the bot
+
+const client = new Client({ intents }); // configured client with intents as options
 
 require("dotenv").config();
 
@@ -10,7 +11,7 @@ client.on("ready", () => {
 });
 
 client.on("messageCreate", (msg) => {
-  if (msg.content == "ping") {
+  if (msg.content == `${process.env.PREFIX}ping`) {
     msg.reply("pong");
   }
 });
