@@ -6,4 +6,4 @@
     - TOKEN=<the_bot_token>
     - PREFIX=b/ [b/ is the default prefix we have]
 
-## this bot is awesome
+## this bot is really awesome
