@@ -22,21 +22,22 @@ module.exports = new Command({
 
     //Checking if user is connected to Voice Channel
     if (!voiceChannel) {
-      return msg.channel.send({embeds: [embed.CONNECT_VOICE_MESSAGE]});
+      return msg.channel.send({ embeds: [embed.CONNECT_VOICE_MESSAGE] });
     }
 
     //Check if bot has all the necessary perms
     const permissions = voiceChannel.permissionsFor(client.user);
     if (!permissions.has("CONNECT")) {
-      return msg.channel.send({embeds: [embed.MISSING_CONNECT_PERM_MESSAGE]});
+      return msg.channel.send({ embeds: [embed.MISSING_CONNECT_PERM_MESSAGE] });
     }
     if (!permissions.has("SPEAK")) {
-      return msg.channel.send({embeds: [embed.MISSING_VOICE_PERM_MESSAGE]});
+      return msg.channel.send({ embeds: [embed.MISSING_VOICE_PERM_MESSAGE] });
     }
 
     //Server queue. We are getting this server queue from the global queue.
     const serverQueue = client.queue.get(msg.guild.id);
-    if (!args.length) return msg.channel.send({embeds: [embed.MISSING_QUERY_MESSAGE]});
+    if (!args.length)
+      return msg.channel.send({ embeds: [embed.MISSING_QUERY_MESSAGE] });
 
     //Typing indicator
     msg.channel.sendTyping();
@@ -73,7 +74,7 @@ module.exports = new Command({
           requested: msg.author.username,
         };
       } else {
-        msg.channel.send({embeds: [embed.ERROR_PLAYING_MESSAGE]});
+        msg.channel.send({ embeds: [embed.ERROR_PLAYING_MESSAGE] });
       }
     }
 
@@ -101,19 +102,19 @@ module.exports = new Command({
         videoPlayer(msg.guild, queueConstructor.songs[0], connection);
       } catch (err) {
         client.queue.delete(msg.guild.id);
-        msg.channel.send({embeds: [embed.ERROR_PLAYING_MESSAGE]});
+        msg.channel.send({ embeds: [embed.ERROR_PLAYING_MESSAGE] });
         console.log(err);
       }
     } else {
       serverQueue.songs.push(song);
-      return msg.channel.send({embeds: [embed.ADDED_QUEUE_MESSAGE(song)]});
+      return msg.channel.send({ embeds: [embed.ADDED_QUEUE_MESSAGE(song)] });
     }
   },
 });
 
 /*
-*
-*/
+ *
+ */
 //Let's bot Play songs
 const videoPlayer = async (guild, song, connection) => {
   queue = guild.client.queue;
@@ -139,12 +140,14 @@ const videoPlayer = async (guild, song, connection) => {
   if (queue.get(guild.id).songs[0])
     queue.get(guild.id).songs[0].startTime = currentTime.toString();
 
-  await songQueue.textChannel.send({embeds: [embed.NOW_PLAYING_MESSAGE(guild, song)]});
+  await songQueue.textChannel.send({
+    embeds: [embed.NOW_PLAYING_MESSAGE(guild, song)],
+  });
 };
 
 /*
-*
-*/
+ *
+ */
 //Song Player
 const getSongPlayer = async (song) => {
   const player = createAudioPlayer();
