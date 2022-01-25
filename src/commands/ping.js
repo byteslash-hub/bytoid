@@ -2,6 +2,7 @@ const Command = require("../structures/Command.js");
 
 module.exports = new Command({
   name: "ping",
+  aliases: [],
   description: "Shows the ping of the bot.",
 
   async run(msg, args, client) {

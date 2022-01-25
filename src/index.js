@@ -6,6 +6,8 @@ const fs = require("fs");
 const Command = require("./structures/Command");
 
 const client = new Client();
+client.queue = new Map();
+client.pauseTime = "";
 
 fs.readdirSync("./src/commands")
   .filter((file) => file.endsWith(".js"))
@@ -14,12 +16,12 @@ fs.readdirSync("./src/commands")
      * @type {Command}
      */
     const command = require(`./commands/${file}`);
-    console.log(`command ${command.name} loaded!`);
+    console.log(`✅ Command ${command.name} Loaded!`);
     client.commands.set(command.name, command);
   });
 
 client.on("ready", () => {
-  console.log(`connected as ${client.user.tag}`);
+  console.log(`👋 Connected as ${client.user.tag}`);
 });
 
 client.on("messageCreate", async (msg) => {
@@ -28,10 +30,17 @@ client.on("messageCreate", async (msg) => {
 
   if (args[0] == "") return;
 
-  const command = client.commands.find((cmd) => cmd.name == args[0]);
+  const command = client.commands.find(
+    (cmd) =>
+      cmd.name == args[0] ||
+      cmd.aliases.includes(args[0]) ||
+      cmd.name == ` ${args[0]}` ||
+      cmd.aliases.includes(` ${args[0]}`)
+  );
 
   if (!command) {
     msg.reply("Not a valid command!");
+    return;
   }
 
   command.run(msg, args, client);
