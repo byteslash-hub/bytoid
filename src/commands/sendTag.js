@@ -2,6 +2,7 @@ const Discord = require("discord.js")
 
 const Command = require("../structures/Command.js");
 const tags = require("../database/schema/tags.js")
+const { error } = require("../utils/color")
 
 module.exports = new Command({
     name: "tag",
@@ -11,21 +12,29 @@ module.exports = new Command({
         const messageArray = args.slice(2, args.length)
         const tagName = args[1]
 
-        tags.findOne({ name: tagName }, function (err, data) {
-            if (err) {
-                console.log(err)
-            }
-            else {
-                try {
-                    msg.reply(data.message)
+        if (args.length === 2) {
+            tags.findOne({ name: tagName }, function (err, data) {
+                if (err) {
+                    console.log(err)
                 }
-                catch (err) {
-                    const errorEmbed = new Discord.MessageEmbed()
-                        .setDescription("That tag doesn't exist")
-                        .setColor("#FF6347")
-                    msg.reply({ embeds: [errorEmbed] })
+                else {
+                    try {
+                        msg.reply(data.message)
+                    }
+                    catch (err) {
+                        const errorEmbed = new Discord.MessageEmbed()
+                            .setDescription("That tag doesn't exist")
+                            .setColor(error)
+                        msg.reply({ embeds: [errorEmbed] })
+                    }
                 }
-            }
-        })
-    },
+            })
+        }
+        else {
+            const errorEmbed = new Discord.MessageEmbed()
+                .setDescription('Invalid number of arguments')
+                .setColor(error)
+            msg.reply({ embeds: [errorEmbed] })
+        }
+    }
 });

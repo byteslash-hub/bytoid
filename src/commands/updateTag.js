@@ -13,19 +13,27 @@ module.exports = new Command({
         const tagName = args[1]
         const message = messageArray.join(" ")
 
-        tags.findOneAndUpdate({ name: tagName }, { message: message }, function (err, data) {
-            if (data) {
-                const successEmbed = new Discord.MessageEmbed()
-                    .setDescription("Successfully updated the tag!")
-                    .setColor(success)
-                msg.reply({ embeds: [successEmbed] })
-            }
-            else {
-                const errorEmbed = new Discord.MessageEmbed()
-                    .setDescription(`Didn't find any tag named \`${tagName}\``)
-                    .setColor(error)
-                msg.reply({ embeds: [errorEmbed] })
-            }
-        })
-    },
+        if (args.length === 2) {
+            tags.findOneAndUpdate({ name: tagName }, { message: message }, function (err, data) {
+                if (data) {
+                    const successEmbed = new Discord.MessageEmbed()
+                        .setDescription("Successfully updated the tag!")
+                        .setColor(success)
+                    msg.reply({ embeds: [successEmbed] })
+                }
+                else {
+                    const errorEmbed = new Discord.MessageEmbed()
+                        .setDescription(`Didn't find any tag named \`${tagName}\``)
+                        .setColor(error)
+                    msg.reply({ embeds: [errorEmbed] })
+                }
+            })
+        }
+        else {
+            const errorEmbed = new Discord.MessageEmbed()
+                .setDescription("Invalid number of arguments")
+                .setColor(error)
+            msg.reply({ embeds: [errorEmbed] })
+        }
+    }
 });
