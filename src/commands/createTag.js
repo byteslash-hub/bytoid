@@ -1,7 +1,8 @@
 const Discord = require("discord.js")
 
 const Command = require("../structures/Command.js");
-const tags = require("../database/schema/tags")
+const tags = require("../database/schema/tags.js")
+const { success, error } = require("../utils/color.js")
 
 module.exports = new Command({
     name: "createTag",
@@ -21,7 +22,7 @@ module.exports = new Command({
             if (data) {
                 const alreadyExistsEmbed = new Discord.MessageEmbed()
                     .setDescription("That tag already exists!")
-                    .setColor("#ff6347")
+                    .setColor(error)
                 msg.reply({ embeds: [alreadyExistsEmbed] })
             }
             else {
@@ -29,12 +30,12 @@ module.exports = new Command({
                     if (err) {
                         const errorEmbed = new Discord.MessageEmbed()
                             .setDescription("An error occurred :(")
-                            .setColor("#ff6347")
+                            .setColor(error)
                         msg.reply({ embeds: [errorEmbed] })
                     }
                     const successEmbed = new Discord.MessageEmbed()
-                        .setDescription(`Added ${tagName} tag`)
-                        .setColor("#12AD2B")
+                        .setDescription(`Added \`${tagName}\` tag`)
+                        .setColor(success)
                     msg.reply({ embeds: [successEmbed] })
                 })
             }

@@ -1,11 +1,12 @@
 const Discord = require("discord.js")
 
 const Command = require("../structures/Command.js");
-const tags = require("../database/schema/tags")
+const tags = require("../database/schema/tags.js")
+const { error } = require("../utils/color.js")
 
 module.exports = new Command({
     name: "tag",
-    description: "Creates a new tag",
+    description: "Sends that a particular tag",
 
     async run(msg, args, client) {
         const messageArray = args.slice(2, args.length)
@@ -17,15 +18,12 @@ module.exports = new Command({
             }
             else {
                 try {
-                    const successEmbed = new Discord.MessageEmbed()
-                        .setDescription(data.message)
-                        .setColor("#5865F2")
-                    msg.reply({ embeds: [successEmbed] })
+                    msg.reply(data.message)
                 }
                 catch (error) {
                     const errorEmbed = new Discord.MessageEmbed()
                         .setDescription("That tag doesn't exist")
-                        .setColor("#ff6347")
+                        .setColor(error)
                     msg.reply({ embeds: [errorEmbed] })
                 }
             }
