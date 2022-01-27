@@ -1,0 +1,1 @@
+run="git pull origin main && node ./src/index.js"
