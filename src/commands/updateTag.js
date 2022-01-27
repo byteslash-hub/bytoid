@@ -11,7 +11,7 @@ module.exports = new Command({
     async run(msg, args, client) {
         if (msg.author.flags.bitfield !== 8) {
             const noPermEmbed = new Discord.MessageEmbed()
-                .setDescription("<:the_bonk:843682837210202122> Nice try, but I won't accept you try tho")
+                .setDescription("<:the_bonk:843682837210202122> Nice try, but I won't accept your try tho")
                 .setColor(error)
             msg.reply({ embeds: [noPermEmbed] })
         }
