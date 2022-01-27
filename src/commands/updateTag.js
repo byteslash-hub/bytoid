@@ -13,7 +13,7 @@ module.exports = new Command({
         const tagName = args[1]
         const message = messageArray.join(" ")
 
-        if (args.length === 2) {
+        if (args.length >= 3) {
             tags.findOneAndUpdate({ name: tagName }, { message: message }, function (err, data) {
                 if (data) {
                     const successEmbed = new Discord.MessageEmbed()
