@@ -9,7 +9,7 @@ module.exports = new Command({
     description: "Updates an existing tag",
 
     async run(msg, args, client) {
-        if (msg.author.flags.bitfield !== 8) {
+        if (!msg.member.permissions.has([Permissions.FLAGS.ADMINISTRATOR])) {
             const noPermEmbed = new Discord.MessageEmbed()
                 .setDescription("<:the_bonk:843682837210202122> Nice try, but I won't accept your try tho")
                 .setColor(error)
