@@ -4,7 +4,8 @@
   "description": "Bytoid Bot",
   "main": "src/index.js",
   "scripts": {
-    "dev": "nodemon ."
+    "dev": "nodemon .",
+    "start": "node ./src/index.js"
   },
   "repository": {
     "type": "git",
@@ -26,7 +27,8 @@
     "moment": "^2.29.1",
     "youtube-music-api-update": "^1.0.6",
     "yt-search": "^2.10.3",
-    "ytdl-core": "^4.10.0"
+    "ytdl-core": "^4.10.0",
+    "mongoose": "^6.1.8"
   },
   "devDependencies": {
     "nodemon": "^2.0.12"

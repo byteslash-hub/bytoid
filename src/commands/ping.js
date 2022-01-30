@@ -9,8 +9,7 @@ module.exports = new Command({
     const message = await msg.reply(`Pong: ${client.ws.ping} ms!`);
 
     message.edit(
-      `Pong: **${client.ws.ping} ms!**\nMessage Ping: **${
-        message.createdTimestamp - msg.createdTimestamp
+      `Pong: **${client.ws.ping} ms!**\nMessage Ping: **${message.createdTimestamp - msg.createdTimestamp
       } ms!**`
     );
   },

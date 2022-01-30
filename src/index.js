@@ -1,15 +1,20 @@
+const fs = require("fs");
+const mongoose = require("mongoose")
 require("dotenv").config();
+
 const PREFIX = process.env.PREFIX;
+const MONGODB_URL = process.env.MONGODB_URL
 
 const Client = require("./structures/Client");
-const fs = require("fs");
 const Command = require("./structures/Command");
 
 const client = new Client();
 client.queue = new Map();
 client.pauseTime = "";
 
-fs.readdirSync("./src/commands")
+const commandDirectory = "./src/commands"
+
+fs.readdirSync(commandDirectory)
   .filter((file) => file.endsWith(".js"))
   .forEach((file) => {
     /**
@@ -26,7 +31,7 @@ client.on("ready", () => {
 
 client.on("messageCreate", async (msg) => {
   if (!msg.content.startsWith(PREFIX)) return;
-  const args = msg.content.substring(process.env.PREFIX.length).split(/ +/);
+  const args = msg.content.slice(PREFIX.length).trim().split(/ +/g);
 
   if (args[0] == "") return;
 
@@ -42,8 +47,9 @@ client.on("messageCreate", async (msg) => {
     msg.reply("Not a valid command!");
     return;
   }
-
-  command.run(msg, args, client);
+  else {
+    command.run(msg, args, client);
+  }
 });
 
 client.login(process.env.TOKEN);
