@@ -6,7 +6,8 @@ const tags = require("../database/schema/tags.js")
 const { success, error } = require("../utils/color.js")
 
 module.exports = new Command({
-    name: "createTag",
+    name: "createtag",
+    aliases: ["addtag"],
     description: "Creates a new tag",
 
     async run(msg, args, client) {

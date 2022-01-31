@@ -5,7 +5,8 @@ const tags = require("../database/schema/tags.js")
 const { success, error } = require("../utils/color.js")
 
 module.exports = new Command({
-    name: "deleteTag",
+    name: "deletetag",
+    aliases: ["removetag"],
     description: "Deletes an existing tag",
 
     async run(msg, args, client) {

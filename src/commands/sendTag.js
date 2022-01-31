@@ -6,6 +6,7 @@ const { error } = require("../utils/color")
 
 module.exports = new Command({
     name: "tag",
+    aliases: [],
     description: "Sends that a particular tag",
 
     async run(msg, args, client) {

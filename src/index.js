@@ -9,6 +9,8 @@ const Client = require("./structures/Client");
 const Command = require("./structures/Command");
 
 const client = new Client();
+client.queue = new Map();
+client.pauseTime = "";
 
 const commandDirectory = "./src/commands"
 
@@ -41,10 +43,17 @@ client.on("messageCreate", async (msg) => {
 
   if (args[0] == "") return;
 
-  const command = client.commands.find((cmd) => cmd.name == args[0]);
+  const command = client.commands.find(
+    (cmd) =>
+      cmd.name == args[0] ||
+      cmd.aliases.includes(`$args[0]}`) ||
+      cmd.name == ` ${args[0]}` ||
+      cmd.aliases.includes(` ${args[0]}`)
+  );
 
   if (!command) {
     msg.reply("Not a valid command!");
+    return;
   }
   else {
     command.run(msg, args, client);
