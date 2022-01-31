@@ -21,12 +21,20 @@ fs.readdirSync(commandDirectory)
      * @type {Command}
      */
     const command = require(`./commands/${file}`);
-    console.log(`✅ Command ${command.name} Loaded!`);
+    console.log(`Command ${command.name} loaded!`);
     client.commands.set(command.name, command);
   });
 
 client.on("ready", () => {
-  console.log(`👋 Connected as ${client.user.tag}`);
+  console.log(`Connected as ${client.user.tag}`);
+  mongoose.connect(MONGODB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }).then(() => {
+    console.log('Connected to MongoDB')
+  }).catch((err) => {
+    console.log('Unable to connect to MongoDB Database.\nError: ' + err)
+  })
 });
 
 client.on("messageCreate", async (msg) => {
@@ -38,7 +46,7 @@ client.on("messageCreate", async (msg) => {
   const command = client.commands.find(
     (cmd) =>
       cmd.name == args[0] ||
-      cmd.aliases.includes(args[0]) ||
+      cmd.aliases.includes(`$args[0]}`) ||
       cmd.name == ` ${args[0]}` ||
       cmd.aliases.includes(` ${args[0]}`)
   );

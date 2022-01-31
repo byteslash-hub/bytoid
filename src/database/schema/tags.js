@@ -1,12 +1,15 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
-const tags = mongoose.model("Tags", new mongoose.Schema({
+const tags = mongoose.model(
+  "Tags",
+  new mongoose.Schema({
     name: {
-        type: String
+      type: String,
     },
     message: {
-        type: String
-    }
-}))
+      type: String,
+    },
+  })
+);
 
-module.exports = tags
+module.exports = tags;

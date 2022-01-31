@@ -1,5 +1,6 @@
 module.exports = {
-    sad: "https://github.com/DesignerDenin/Mr.Hooman-Discord-Bot/blob/main/Hooman%20Avatars/sad.png?raw=true",
-    swag: "https://github.com/DesignerDenin/Mr.Hooman-Discord-Bot/blob/main/Hooman%20Avatars/swag.png?raw=true",
-    nerdy: "https://github.com/DesignerDenin/Mr.Hooman-Discord-Bot/blob/main/Hooman%20Avatars/nerdy.png?raw=true",
+    sad: "https://i.ibb.co/0mfCcLb/sad-hooman.png",
+    swag: "https://i.ibb.co/Lkfcfd5/swag-hooman.png",
+    nerdy: "https://i.ibb.co/QQzQgrf/nerd-hooman.png",
+    yes: "https://i.ibb.co/N3DXKnR/yes-hooman.png"
 }

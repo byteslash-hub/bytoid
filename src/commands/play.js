@@ -3,14 +3,7 @@ const ytdl = require("ytdl-core");
 const ytSearch = require("yt-search");
 const moment = require("moment");
 const embed = require("../utils/embeds.js");
-const {
-  joinVoiceChannel,
-  entersState,
-  StreamType,
-  createAudioPlayer,
-  createAudioResource,
-  AudioPlayerStatus,
-} = require("@discordjs/voice");
+const voice = require("@discordjs/voice");
 
 module.exports = new Command({
   name: "play",
@@ -22,22 +15,22 @@ module.exports = new Command({
 
     //Checking if user is connected to Voice Channel
     if (!voiceChannel) {
-      return msg.channel.send({ embeds: [embed.CONNECT_VOICE_MESSAGE] });
+      return msg.reply({ embeds: [embed.CONNECT_VOICE_MESSAGE] });
     }
 
     //Check if bot has all the necessary perms
     const permissions = voiceChannel.permissionsFor(client.user);
     if (!permissions.has("CONNECT")) {
-      return msg.channel.send({ embeds: [embed.MISSING_CONNECT_PERM_MESSAGE] });
+      return msg.reply({ embeds: [embed.MISSING_CONNECT_PERM_MESSAGE] });
     }
     if (!permissions.has("SPEAK")) {
-      return msg.channel.send({ embeds: [embed.MISSING_VOICE_PERM_MESSAGE] });
+      return msg.reply({ embeds: [embed.MISSING_VOICE_PERM_MESSAGE] });
     }
 
     //Server queue. We are getting this server queue from the global queue.
     const serverQueue = client.queue.get(msg.guild.id);
     if (!args.length)
-      return msg.channel.send({ embeds: [embed.MISSING_QUERY_MESSAGE] });
+      return msg.reply({ embeds: [embed.MISSING_QUERY_MESSAGE] });
 
     //Typing indicator
     msg.channel.sendTyping();
@@ -74,7 +67,7 @@ module.exports = new Command({
           requested: msg.author.username,
         };
       } else {
-        msg.channel.send({ embeds: [embed.ERROR_PLAYING_MESSAGE] });
+        msg.reply({ embeds: [embed.ERROR_PLAYING_MESSAGE] });
       }
     }
 
@@ -93,36 +86,34 @@ module.exports = new Command({
 
       //Establish a connection and play the song
       try {
-        const connection = joinVoiceChannel({
+        const connection = voice.joinVoiceChannel({
           channelId: voiceChannel.id,
           guildId: msg.guild.id,
           adapterCreator: msg.guild.voiceAdapterCreator,
         });
         queueConstructor.connection = connection;
-        videoPlayer(msg.guild, queueConstructor.songs[0], connection);
+        audioPlayer(msg, queueConstructor.songs[0], connection);
       } catch (err) {
         client.queue.delete(msg.guild.id);
-        msg.channel.send({ embeds: [embed.ERROR_PLAYING_MESSAGE] });
+        msg.reply({ embeds: [embed.ERROR_PLAYING_MESSAGE] });
         console.log(err);
       }
     } else {
       serverQueue.songs.push(song);
-      return msg.channel.send({ embeds: [embed.ADDED_QUEUE_MESSAGE(song)] });
+      return msg.reply({ embeds: [embed.ADDED_QUEUE_MESSAGE(song)] });
     }
   },
 });
 
-/*
- *
- */
-//Let's bot Play songs
-const videoPlayer = async (guild, song, connection) => {
-  queue = guild.client.queue;
-  const songQueue = queue.get(guild.id);
+
+//---------------Let's bot Play songs---------------------
+const audioPlayer = async (msg, song, connection) => {
+  queue = msg.guild.client.queue;
+  const songQueue = queue.get(msg.guild.id);
 
   if (!song) {
-    songQueue.voiceChannel.leave();
-    queue.delete(guild.id);
+    voice.getVoiceConnection(msg.guild.id).destroy();
+    queue.delete(msg.guild.id);
     return;
   }
 
@@ -130,34 +121,25 @@ const videoPlayer = async (guild, song, connection) => {
   connection.subscribe(songQueue.audioPlayer);
   songQueue.isPlaying = true;
 
-  songQueue.audioPlayer.on(AudioPlayerStatus.Idle, () => {
+  songQueue.audioPlayer.on(voice.AudioPlayerStatus.Idle, () => {
     songQueue.songs.shift();
-    videoPlayer(guild, songQueue.songs[0]);
+    audioPlayer(msg.guild, songQueue.songs[0]);
   });
 
   //Add start time to the song to calculate elapsed time later
-  const currentTime = await moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
-  if (queue.get(guild.id).songs[0])
-    queue.get(guild.id).songs[0].startTime = currentTime.toString();
+  const currentTime = await moment().format("YYYY MM DD HH mm ss");
+  if (queue.get(msg.guild.id).songs[0])
+    queue.get(msg.guild.id).songs[0].startTime = currentTime.toString();
 
-  await songQueue.textChannel.send({
-    embeds: [embed.NOW_PLAYING_MESSAGE(guild, song)],
-  });
+  await msg.reply({ embeds: [embed.NOW_PLAYING_MESSAGE(song)] });
 };
 
-/*
- *
- */
-//Song Player
+
+//--------------SONG PLAYER--------------------
 const getSongPlayer = async (song) => {
-  const player = createAudioPlayer();
-  const stream = ytdl(song.url, {
-    filter: "audioonly",
-    highWaterMark: 1 << 25, // Set buffer size
-  });
-  const resource = createAudioResource(stream, {
-    inputType: StreamType.Arbitrary,
-  });
+  const player = voice.createAudioPlayer();
+  const stream = ytdl(song.url, { filter: "audioonly", highWaterMark: 1 << 25 });
+  const resource = voice.createAudioResource(stream, { inputType: voice.StreamType.Arbitrary });
   player.play(resource);
-  return entersState(player, AudioPlayerStatus.Playing, 5_000);
+  return voice.entersState(player, voice.AudioPlayerStatus.Playing, 5_000);
 };

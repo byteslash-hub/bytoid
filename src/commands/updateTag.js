@@ -5,7 +5,8 @@ const tags = require("../database/schema/tags.js")
 const { success, error } = require("../utils/color.js")
 
 module.exports = new Command({
-    name: "updateTag",
+    name: "updatetag",
+    aliases: ["edittag"],
     description: "Updates an existing tag",
 
     async run(msg, args, client) {
