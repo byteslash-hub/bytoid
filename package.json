@@ -30,10 +30,6 @@
     "yt-search": "^2.10.3",
     "ytdl-core": "^4.10.0"
   },
-  "engines": {
-    "npm": ">=7.19.1",
-    "node": ">=16.6.0"
-  },
   "devDependencies": {
     "nodemon": "^2.0.12"
   }
