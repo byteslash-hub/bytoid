@@ -25,14 +25,14 @@
     "ffmpeg-static": "^4.4.1",
     "libsodium-wrappers": "^0.7.9",
     "moment": "^2.29.1",
+    "mongoose": "^6.1.8",
     "youtube-music-api-update": "^1.0.6",
     "yt-search": "^2.10.3",
-    "ytdl-core": "^4.10.0",
-    "mongoose": "^6.1.8"
+    "ytdl-core": "^4.10.0"
   },
   "engines": {
-    "npm": ">=8.3.2",
-    "node": ">=16.13.2"
+    "npm": ">=7.19.1",
+    "node": ">=16.6.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.12"
