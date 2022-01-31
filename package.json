@@ -30,6 +30,10 @@
     "ytdl-core": "^4.10.0",
     "mongoose": "^6.1.8"
   },
+  "engines": {
+    "npm": ">=8.3.2",
+    "node": ">=16.13.2"
+  },
   "devDependencies": {
     "nodemon": "^2.0.12"
   }
