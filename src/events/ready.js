@@ -19,11 +19,9 @@ module.exports = {
       });
 
     require("http")
-      .createServer((req, res) => res.end("Behold! Mr.Hooman is alive!"))
+      .createServer((req, res) => res.end("Behold! Bytoid is alive!"))
       .listen(process.env.PORT || 3000);
 
-    client.user.setPresence({
-      activity: { name: `with Builders`, type: "LISTENING" },
-    });
+    client.user.setActivity("to Builders 🛠", { type: "LISTENING" });
   },
 };
