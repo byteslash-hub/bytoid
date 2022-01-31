@@ -1,8 +1,9 @@
+const voice = require("@discordjs/voice");
 const embed = require("../utils/embeds.js");
 
 module.exports = {
-  name: "nowplaying",
-  aliases: ["np", "now"],
+  name: "leave",
+  aliases: ["stop", "clear", "exit"],
 
   async run(msg, args, client) {
     msg.channel.sendTyping();
@@ -15,10 +16,11 @@ module.exports = {
     }
 
     if (!songQueue) {
-      return msg.reply({ embeds: [embed.NO_QUEUE_MESSAGE] });
+      return msg.reply({ embeds: [embed.NOT_PLAYING_MESSAGE] });
     }
 
-    const song = songQueue.songs[0];
-    await msg.reply({ embeds: [embed.NOW_PLAYING_MESSAGE(song)] });
+    songQueue.songs = [];
+    msg.channel.send("👋 Cya! Hope you had a great time.");
+    voice.getVoiceConnection(msg.guild.id).destroy();
   },
 };

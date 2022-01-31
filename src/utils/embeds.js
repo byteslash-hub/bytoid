@@ -41,10 +41,16 @@ const ERROR_PLAYING_MESSAGE = new Discord.MessageEmbed()
     .setColor('#2F3136');
 
 const NO_QUEUE_MESSAGE = new Discord.MessageEmbed()
-    .setTitle("🗑 Queue Empty!")
+    .setTitle("⚠ Queue Empty!")
     .setDescription(`Use \`${PREFIX}play <query>\` to add a track to the queue`)
     .setThumbnail(emotes.sad)
-    .setColor('#2F3136');   
+    .setColor('#2F3136');
+
+const NOT_PLAYING_MESSAGE = new Discord.MessageEmbed()
+    .setTitle("⚠ Bytoid isn't playing any Music!")
+    .setDescription(`Use \`${PREFIX}play <query>\` to have Bytoid play the queried track for you`)
+    .setThumbnail(emotes.sad)
+    .setColor('#2F3136'); 
 
 const ADDED_QUEUE_MESSAGE = (song) => {
   return new Discord.MessageEmbed()
@@ -111,6 +117,7 @@ module.exports = {
   "MISSING_QUERY_MESSAGE": MISSING_QUERY_MESSAGE,
   "ERROR_PLAYING_MESSAGE": ERROR_PLAYING_MESSAGE,
   "NO_QUEUE_MESSAGE": NO_QUEUE_MESSAGE,
+  "NOT_PLAYING_MESSAGE": NOT_PLAYING_MESSAGE,
   "NOW_PLAYING_MESSAGE": NOW_PLAYING_MESSAGE,
   "ADDED_QUEUE_MESSAGE": ADDED_QUEUE_MESSAGE,
 }
