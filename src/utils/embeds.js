@@ -39,7 +39,12 @@ const ERROR_PLAYING_MESSAGE = new Discord.MessageEmbed()
     .setDescription(`Mr.Hooman was having trouble playing your music. Please [contact](https://discord.gg/KdFDYwpCa5) his therapist and talk to him on this!`)
     .setThumbnail(emotes.nerdy)
     .setColor('#2F3136');
-   
+
+const NO_QUEUE_MESSAGE = new Discord.MessageEmbed()
+    .setTitle("🗑 Queue Empty!")
+    .setDescription(`Use \`${PREFIX}play <query>\` to add a track to the queue`)
+    .setThumbnail(emotes.sad)
+    .setColor('#2F3136');   
 
 const ADDED_QUEUE_MESSAGE = (song) => {
   return new Discord.MessageEmbed()
@@ -105,6 +110,7 @@ module.exports = {
   "MISSING_VOICE_PERM_MESSAGE": MISSING_VOICE_PERM_MESSAGE,
   "MISSING_QUERY_MESSAGE": MISSING_QUERY_MESSAGE,
   "ERROR_PLAYING_MESSAGE": ERROR_PLAYING_MESSAGE,
+  "NO_QUEUE_MESSAGE": NO_QUEUE_MESSAGE,
   "NOW_PLAYING_MESSAGE": NOW_PLAYING_MESSAGE,
   "ADDED_QUEUE_MESSAGE": ADDED_QUEUE_MESSAGE,
 }

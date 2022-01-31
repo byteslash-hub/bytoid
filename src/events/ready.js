@@ -22,6 +22,6 @@ module.exports = {
       .createServer((req, res) => res.end("Behold! Bytoid is alive!"))
       .listen(process.env.PORT || 3000);
 
-    client.user.setActivity("to Builders 🛠", { type: "LISTENING" });
+    client.user.setActivity("Builders 🛠", { type: "LISTENING" });
   },
 };

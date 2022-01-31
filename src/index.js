@@ -20,6 +20,9 @@ fs.readdirSync(commandDirectory)
     const command = require(`./commands/${file}`);
     console.log(`Command ${command.name} loaded!`);
     client.commands.set(command.name, command);
+    command.aliases.forEach((alias) => {
+      client.aliases.set(alias, command.name);
+    });
   });
 
 //----------- EVENT HANDLER -------------

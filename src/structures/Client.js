@@ -11,6 +11,7 @@ class Client extends Discord.Client {
      * @type {Discord.Collection<string, Command>}
      */
     this.commands = new Collection();
+    this.aliases = new Collection();
   }
 }
 

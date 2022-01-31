@@ -4,23 +4,19 @@ module.exports = {
   name: "messageCreate",
   run(msg) {
     if (!msg.content.startsWith(PREFIX)) return;
-    const args = msg.content.slice(PREFIX.length).trim().split(/ +/g);
+    content = msg.content.toLowerCase();
+    const args = content.slice(PREFIX.length).trim().split(/ +/g);
 
     if (args[0] == "") return;
 
     const command = msg.client.commands.find(
-      (cmd) =>
-        cmd.name == args[0] ||
-        cmd.aliases.includes(`$args[0]}`) ||
-        cmd.name == ` ${args[0]}` ||
-        cmd.aliases.includes(` ${args[0]}`)
+      (cmd) => cmd.name == args[0] || msg.client.aliases.get(args[0]) == cmd.name 
     );
 
-    if (!command) {
-      msg.reply("Not a valid command!");
-      return;
-    } else {
+
+    if (command) {
       command.run(msg, args, msg.client);
+      return;
     }
   },
 };
