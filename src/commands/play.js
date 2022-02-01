@@ -32,6 +32,10 @@ module.exports = new Command({
     if (!args.length)
       return msg.reply({ embeds: [embed.MISSING_QUERY_MESSAGE] });
 
+    if (!serverQueue) {
+      return msg.reply({ embeds: [embed.NO_QUEUE_MESSAGE] });
+    }
+
     //Typing indicator
     msg.channel.sendTyping();
 

@@ -35,6 +35,8 @@
     "node": ">=16.6.0"
   },
   "devDependencies": {
+    "node": "^16.6.0",
     "nodemon": "^2.0.12"
-  }
+  },
+  "keywords": []
 }
